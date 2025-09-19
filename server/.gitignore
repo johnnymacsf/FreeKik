@@ -33,3 +33,6 @@ build/
 .vscode/
 
 server/mvnw.cmd
+
+.env
+*.env
