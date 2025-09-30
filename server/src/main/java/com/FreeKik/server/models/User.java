@@ -3,6 +3,7 @@ package com.FreeKik.server.models;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,12 +16,15 @@ public class User implements Serializable {
     private String username;
     private String email;
     private String password;
-    private Long wins;
-    private Long losses;
-    private Long points;
+    private Long wins = 0L;
+    private Long losses = 0L;
+    private Long points = 100L;
+
+    @Column(nullable = false)
+    private String role = "USER";
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
-    private List<Prediction> predictions;
+    private List<Prediction> predictions = new ArrayList<>();
 
     public User() {
     }
@@ -34,6 +38,10 @@ public class User implements Serializable {
         this.losses = losses;
         this.predictions = predictions;
         this.points = points;
+    }
+
+    public String getRole(){
+        return role;
     }
 
     public Long getUserId() {
