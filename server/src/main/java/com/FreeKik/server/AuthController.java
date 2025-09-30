@@ -1,6 +1,7 @@
 package com.FreeKik.server;
 
 import com.FreeKik.server.models.User;
+import com.FreeKik.server.service.JwtService;
 import com.FreeKik.server.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
+    private final JwtService jwtService;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, JwtService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/login")
@@ -25,8 +28,8 @@ public class AuthController {
         if(!userService.checkPassword(user.getPassword(), existingUser.getPassword())){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password!");
         }
-
-        return ResponseEntity.ok("Logged in as " + existingUser.getUsername());
+        String jwt = jwtService.generateToken(existingUser.getUsername());
+        return ResponseEntity.ok().header("Authorization", "Bearer " + jwt).body("Logged in as " + existingUser.getUsername());
     }
 
     @PostMapping("/register")
