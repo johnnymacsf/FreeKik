@@ -22,7 +22,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // allow these routes without authentication
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/user/stats").authenticated()
+                        //.requestMatchers("/user/**").permitAll()
                         // everything else still requires auth
                         .anyRequest().authenticated()
                 )

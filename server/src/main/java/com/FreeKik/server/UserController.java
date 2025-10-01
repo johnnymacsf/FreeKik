@@ -4,9 +4,12 @@ import com.FreeKik.server.models.User;
 import com.FreeKik.server.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -33,5 +36,16 @@ public class UserController {
     public ResponseEntity<User> addUser(@RequestBody User user) {
         User newUser = userService.addUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<UserStatsDto> getUserStats(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userService.findUserByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        UserStatsDto stats = new UserStatsDto(user.getPoints(), user.getWins(), user.getLosses());
+        return ResponseEntity.ok(stats);
     }
 }
