@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsLoggedIn(!!localStorage.getItem('token'));
@@ -18,6 +20,7 @@ export default function Navbar() {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
     alert('Logged out successfully');
+    router.push('/');
   }
 
   return (
@@ -30,9 +33,20 @@ export default function Navbar() {
       {menuOpen && (
         <div className="absolute right-4 top-14 bg-white text-black rounded shadow p-4">
           {isLoggedIn ? (
-            <button className="block w-full mb-2" onClick={handleLogout}>
-              Logout
-            </button>
+            <>
+              <button className='block w-full mb-2' onClick={() => router.push('/matches')}>
+                Matches
+              </button>
+              <button className='block w-full mb-2' onClick={() => router.push('/user-stats')}>
+                User Stats
+              </button>
+              <button className='block w-full mb-2' onClick={() => router.push('/predictions')}>
+                Predictions
+              </button>
+              <button className="block w-full mb-2" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
           ) : (
             <>
               <button
