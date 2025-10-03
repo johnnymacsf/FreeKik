@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [showSignUpForm, setShowSignUpForm] = useState(false);
 
   useEffect(() => {
     setIsLoggedIn(!!localStorage.getItem('token'));
@@ -42,7 +44,14 @@ export default function Navbar() {
               >
                 Login
               </button>
-              <button className="block w-full mb-2">Sign Up</button>
+              <button className="block w-full mb-2"
+                onClick={() => {
+                  setShowSignUpForm(true);
+                  setMenuOpen(false);
+                }}
+              >
+                Sign Up
+              </button>
             </>
           )}
         </div>
@@ -52,6 +61,13 @@ export default function Navbar() {
         <LoginForm
           onSuccess={() => setIsLoggedIn(true)}
           onClose={() => setShowLoginForm(false)}
+        />
+      )}
+
+      {showSignUpForm && (
+        <SignUpForm 
+          onClose={() => setShowSignUpForm(false)}
+          onShowLogin={() => setShowLoginForm(true)}
         />
       )}
     </div>
