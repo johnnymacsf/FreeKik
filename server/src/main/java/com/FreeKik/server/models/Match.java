@@ -1,134 +1,105 @@
 package com.FreeKik.server.models;
 
+import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.google.gson.annotations.SerializedName;
 import jakarta.persistence.*;
+import com.google.gson.*;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 
 @Entity
 public class Match implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; //primary key id that we generate in the database table
+    private Long key; //primary key id that we generate in the database table
 
     @Column(unique = true, nullable = false)
+    @SerializedName("id")
     private String matchId; //matchId from the API
+    @SerializedName("home_team")
     private String homeTeam;
+    @SerializedName("away_team")
     private String awayTeam;
     private String finalResult = ""; //default is blank for now and we update it when the game finishes
+    @SerializedName("commence_time")
     private LocalDate matchDate;
-    private String homeWinOdds;
-    private String awayWinOdds;
-    private String drawOdds;
 
-    public Match(){}
+    private Book book;
 
-    public Match(String matchId, String homeTeam, String awayTeam, String finalResult, LocalDate matchDate, String homeWinOdds, String awayWinOdds, String drawOdds) {
+    public Match(String matchId, String homeTeam, String awayTeam, String finalResult, LocalDate matchDate) {
         this.matchId = matchId;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.finalResult = finalResult;
         this.matchDate = matchDate;
-        this.homeWinOdds = homeWinOdds;
-        this.awayWinOdds = awayWinOdds;
-        this.drawOdds = drawOdds;
+        this.book = new Book();
     }
 
-    public Match(Long id, String matchId, String homeTeam, String awayTeam, LocalDate matchDate, String homeWinOdds, String awayWinOdds, String drawOdds) {
-        this.id = id;
+    public Match(Long key, String matchId, String homeTeam, String awayTeam, LocalDate matchDate) {
+        this.key = key;
         this.matchId = matchId;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.matchDate = matchDate;
-        this.homeWinOdds = homeWinOdds;
-        this.awayWinOdds = awayWinOdds;
-        this.drawOdds = drawOdds;
+        this.book = new Book();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Long getKey() {
+        return key;
     }
 
     public String getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(String matchId) {
-        this.matchId = matchId;
-    }
-
     public String getHomeTeam() {
         return homeTeam;
-    }
-
-    public void setHomeTeam(String homeTeam) {
-        this.homeTeam = homeTeam;
     }
 
     public String getAwayTeam() {
         return awayTeam;
     }
 
-    public void setAwayTeam(String awayTeam) {
-        this.awayTeam = awayTeam;
-    }
-
     public String getFinalResult() {
         return finalResult;
-    }
-
-    public void setFinalResult(String finalResult) {
-        this.finalResult = finalResult;
     }
 
     public LocalDate getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(LocalDate matchDate) {
-        this.matchDate = matchDate;
-    }
-
-    public String getAwayWinOdds() {
-        return awayWinOdds;
-    }
-
-    public void setAwayWinOdds(String awayWinOdds) {
-        this.awayWinOdds = awayWinOdds;
-    }
-
-    public String getHomeWinOdds() {
-        return homeWinOdds;
-    }
-
-    public void setHomeWinOdds(String homeWinOdds) {
-        this.homeWinOdds = homeWinOdds;
-    }
-
-    public String getDrawOdds() {
-        return drawOdds;
-    }
-
-    public void setDrawOdds(String drawOdds) {
-        this.drawOdds = drawOdds;
+    public void setBook(Book book){
+        this.book = book;
     }
 
     @Override
     public String toString() {
         return "Match{" +
-                "id=" + id +
+                "id=" + key +
                 ", matchId='" + matchId + '\'' +
                 ", homeTeam='" + homeTeam + '\'' +
                 ", awayTeam='" + awayTeam + '\'' +
                 ", finalResult='" + finalResult + '\'' +
                 ", matchDate=" + matchDate +
-                ", homeWinOdds='" + homeWinOdds + '\'' +
-                ", awayWinOdds='" + awayWinOdds + '\'' +
-                ", drawOdds='" + drawOdds + '\'' +
                 '}';
+    }
+
+    public static class MatchDeserializer implements JsonDeserializer<Match> {
+        @Override
+        public Match deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            JsonObject obj = jsonElement.getAsJsonObject();
+            Gson gson = new Gson();
+            Match match = gson.fromJson(obj, Match.class);
+
+            if (obj.has("bookmakers")) {
+                Book book = gson.fromJson(obj.getAsJsonObject("bookmakers"), Book.class);
+                match.setBook(book);
+            }
+            return match;
+        }
     }
 }

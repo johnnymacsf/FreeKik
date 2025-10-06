@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Prediction implements Serializable {
+public class Prediction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long predictionId;
@@ -14,13 +14,8 @@ public class Prediction implements Serializable {
     private String awayTeam;
     private String finalResult;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "match_id", nullable = false)
-    private Match match;
+    private Long userId;
+    private Long matchId;
 
     private String resultPrediction;
     private String predictionOdds;
@@ -30,10 +25,10 @@ public class Prediction implements Serializable {
 
     public Prediction() {}
 
-    public Prediction(Long predictionId, User user, Match match, String result_prediction, String prediction_odds, Long pointsBet) {
+    public Prediction(Long predictionId, Long userId, Long matchId, String result_prediction, String prediction_odds, Long pointsBet) {
         this.predictionId = predictionId;
-        this.user = user;
-        this.match = match;
+        this.userId = userId;
+        this.matchId = matchId;
         this.resultPrediction = result_prediction;
         this.predictionOdds = prediction_odds;
         this.pointsBet = pointsBet;
@@ -43,24 +38,12 @@ public class Prediction implements Serializable {
         return predictionId;
     }
 
-    public void setPredictionId(Long predictionId) {
-        this.predictionId = predictionId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Match getMatch() {
-        return match;
-    }
-
-    public void setMatch(Match match) {
-        this.match = match;
+    public Long getMatchId() {
+        return matchId;
     }
 
     public String getResult_prediction() {
@@ -106,14 +89,14 @@ public class Prediction implements Serializable {
     @Override
     public String toString() {
         return "Prediction{" +
-                "predictionId=" + predictionId +
-                ", user=" + user +
-                ", match=" + match +
-                ", result_prediction='" + resultPrediction + '\'' +
-                ", prediction_odds='" + predictionOdds + '\'' +
-                ", pointsBet=" + pointsBet +
-                ", correctPrediction=" + correctPrediction +
-                ", pointsResult=" + pointsResult +
+                "predictionId= " + predictionId +
+                ", userId= " + userId +
+                ", matchId= " + matchId +
+                ", result_prediction= " + resultPrediction + '\'' +
+                ", prediction_odds= " + predictionOdds + '\'' +
+                ", pointsBet= " + pointsBet +
+                ", correctPrediction= " + correctPrediction +
+                ", pointsResult= " + pointsResult +
                 '}';
     }
 }
