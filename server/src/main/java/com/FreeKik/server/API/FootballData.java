@@ -7,7 +7,7 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 
 public class FootballData {
-    public static String getFootballData() {
+    public static String getAllFootballData() {
         HttpResponse<String> response = null;
         try {
             HttpClient client = HttpClient.newHttpClient();

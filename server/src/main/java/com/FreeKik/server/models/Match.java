@@ -1,5 +1,6 @@
 package com.FreeKik.server.models;
 
+import com.FreeKik.server.Handlers.HandleMatches;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.google.gson.annotations.SerializedName;
@@ -24,17 +25,18 @@ public class Match implements Serializable {
     private String homeTeam;
     @SerializedName("away_team")
     private String awayTeam;
+    private int homeScore;
+    private int awayScore;
     private String finalResult = ""; //default is blank for now and we update it when the game finishes
     @SerializedName("commence_time")
     private LocalDate matchDate;
 
     private Book book;
 
-    public Match(String matchId, String homeTeam, String awayTeam, String finalResult, LocalDate matchDate) {
+    public Match(String matchId, String homeTeam, String awayTeam, LocalDate matchDate) {
         this.matchId = matchId;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        this.finalResult = finalResult;
         this.matchDate = matchDate;
         this.book = new Book();
     }
@@ -68,13 +70,17 @@ public class Match implements Serializable {
         return finalResult;
     }
 
+    public void setFinalResult(String result) { this.finalResult = result; }
+
+    public void setHomeScore(int score) { this.homeScore = score; }
+
+    public void setAwayScore(int score) { this.awayScore = score; }
+
     public LocalDate getMatchDate() {
         return matchDate;
     }
 
-    public void setBook(Book book){
-        this.book = book;
-    }
+    public void setBook(Book book) { this.book = book; }
 
     @Override
     public String toString() {

@@ -9,7 +9,15 @@ public class MatchMap {
         this.matches = new HashMap<>();
     }
 
+    public HashMap<String, Match> getMatches() {
+        return matches;
+    }
+
     public void addMatch(String matchId, Match match){
         matches.put(matchId, match);
+    }
+
+    public void merge(MatchMap otherMap){
+        otherMap.getMatches().forEach(this::addMatch);
     }
 }

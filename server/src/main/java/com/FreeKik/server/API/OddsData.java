@@ -10,19 +10,48 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 
 public class OddsData {
+    private static final String apiKey = "ca81cffb7dd2d88f9770009d6fb10e53";
+    private static final String sportsKey = "soccer_epl";
+    private static final String regions = "us";
+    private static final String markets = "h2h";
+
     public static JsonObject getAllOddsData() {
         HttpResponse<String> response = null;
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.the-odds-api.com/v4/sports/soccer_epl/odds/?apiKey=ca81cffb7dd2d88f9770009d6fb10e53&regions=us&markets=h2h2"))
+                    .uri(URI.create("https://api.the-odds-api.com/v4/sports/" + sportsKey
+                            + "/odds/?apiKey=" + apiKey
+                            + "&regions=" + regions
+                            + "&markets=" + markets))
                     .build();
 
             response = client.send(request, BodyHandlers.ofString());
 
+            //System.out.println(response.statusCode());
+            //System.out.println(response.body());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(response.body(), JsonObject.class);
+        return jsonObject;
+    }
 
-            System.out.println(response.statusCode());
-            System.out.println(response.body());
+    public static JsonObject getMatchScore(String matchId){
+        HttpResponse<String> response = null;
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.the-odds-api.com/v4/sports/" + sportsKey
+                            + "/scores/?apiKey=" + apiKey
+                            + "&eventIds=" + matchId))
+                    .build();
+
+            response = client.send(request, BodyHandlers.ofString());
+
+            //System.out.println(response.statusCode());
+            //System.out.println(response.body());
         } catch (Exception e) {
             e.printStackTrace();
         }
