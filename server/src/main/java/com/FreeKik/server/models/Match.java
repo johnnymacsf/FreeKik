@@ -1,13 +1,9 @@
 package com.FreeKik.server.models;
 
-import com.FreeKik.server.Handlers.HandleMatches;
-import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.databind.DeserializationContext;
 import com.google.gson.annotations.SerializedName;
 import jakarta.persistence.*;
 import com.google.gson.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
@@ -32,14 +28,14 @@ public class Match implements Serializable {
     @SerializedName("commence_time")
     private LocalDate matchDate;
 
-    private Book book;
+    private OddsBook book;
 
     public Match(String matchId, String homeTeam, String awayTeam, LocalDate matchDate) {
         this.matchId = matchId;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.matchDate = matchDate;
-        this.book = new Book();
+        this.book = new OddsBook();
     }
 
     public Match(Long key, String matchId, String homeTeam, String awayTeam, LocalDate matchDate) {
@@ -48,7 +44,7 @@ public class Match implements Serializable {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.matchDate = matchDate;
-        this.book = new Book();
+        this.book = new OddsBook();
     }
 
     public Long getKey() {
@@ -81,7 +77,7 @@ public class Match implements Serializable {
         return matchDate;
     }
 
-    public void setBook(Book book) { this.book = book; }
+    public void setBook(OddsBook book) { this.book = book; }
 
     public HashMap<String, Double> getAvgOdds(){
         return this.book.getAvg(this.homeTeam, this.awayTeam);
@@ -107,7 +103,7 @@ public class Match implements Serializable {
             Match match = gson.fromJson(obj, Match.class);
 
             if (obj.has("bookmakers")) {
-                Book book = gson.fromJson(obj.getAsJsonObject("bookmakers"), Book.class);
+                OddsBook book = gson.fromJson(obj.getAsJsonObject("bookmakers"), OddsBook.class);
                 match.setBook(book);
             }
             return match;

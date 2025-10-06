@@ -3,6 +3,7 @@ package com.FreeKik.server.Handlers;
 import com.FreeKik.server.API.OddsData;
 import com.FreeKik.server.models.Match;
 import com.FreeKik.server.models.MatchMap;
+import com.FreeKik.server.models.OddsBook;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -11,7 +12,7 @@ import com.google.gson.JsonObject;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-public class HandleMatches {
+public class MatchHandler {
     public MatchMap getMatchMap(){
         JsonObject object = OddsData.getAllOddsData();
         MatchMap mp = new MatchMap();
@@ -58,6 +59,12 @@ public class HandleMatches {
             }
         }
 
+        return match;
+    }
+
+    public Match updateBook(Match match){
+        OddsBook book = OddsHandler.getBook(match.getMatchId());
+        match.setBook(book);
         return match;
     }
 }

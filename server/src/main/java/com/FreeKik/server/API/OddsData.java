@@ -49,9 +49,27 @@ public class OddsData {
                     .build();
 
             response = client.send(request, BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(response.body(), JsonObject.class);
+        return jsonObject;
+    }
 
-            //System.out.println(response.statusCode());
-            //System.out.println(response.body());
+    public static JsonObject getMatchOdds(String matchId){
+        HttpResponse<String> response = null;
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.the-odds-api.com/v4/sports/" + sportsKey
+                            + "/odds/?apiKey=" + apiKey
+                            + "&regions=" + regions
+                            + "&markets=" + markets
+                            + "&eventIds=" + matchId))
+                    .build();
+
+            response = client.send(request, BodyHandlers.ofString());
         } catch (Exception e) {
             e.printStackTrace();
         }

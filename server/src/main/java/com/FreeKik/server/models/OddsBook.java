@@ -6,10 +6,10 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class Book implements Serializable {
+public class OddsBook implements Serializable {
     private HashMap<String, Odds> book;
 
-    public Book(){
+    public OddsBook(){
         this.book = new HashMap<>();
     }
 
@@ -33,12 +33,12 @@ public class Book implements Serializable {
         this.book.put(bookmaker, odds);
     }
 
-    public static class BookDeserializer implements JsonDeserializer<Book> {
+    public static class BookDeserializer implements JsonDeserializer<OddsBook> {
         @Override
-        public Book deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        public OddsBook deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             JsonArray bookmakers = jsonElement.getAsJsonArray();
             Gson gson = new Gson();
-            Book book = new Book();
+            OddsBook book = new OddsBook();
             for(JsonElement element : bookmakers){
                 JsonObject oddsObj = element.getAsJsonObject();
                 book.addOdds(oddsObj.get("title").toString(), gson.fromJson(oddsObj.getAsJsonObject("markets"), Odds.class));
