@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 @Entity
 public class Match implements Serializable {
@@ -81,6 +82,10 @@ public class Match implements Serializable {
     }
 
     public void setBook(Book book) { this.book = book; }
+
+    public HashMap<String, Double> getAvgOdds(){
+        return this.book.getAvg(this.homeTeam, this.awayTeam);
+    }
 
     @Override
     public String toString() {

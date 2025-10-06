@@ -13,6 +13,22 @@ public class Book implements Serializable {
         this.book = new HashMap<>();
     }
 
+    public HashMap<String, Double> getAvg(String home, String away){
+        HashMap<String, Double> map = new HashMap<>();
+        double homeOdds = 0.0;
+        double awayOdds = 0.0;
+        double drawOdds = 0.0;
+        for(Odds odds : this.book.values()){
+            homeOdds += odds.getOutcomeOdds(home);
+            awayOdds += odds.getOutcomeOdds(away);
+            drawOdds += odds.getOutcomeOdds("Draw");
+        }
+        map.put(home, homeOdds/this.book.size());
+        map.put(away, awayOdds/this.book.size());
+        map.put("Draw", drawOdds/this.book.size());
+        return map;
+    }
+
     public void addOdds(String bookmaker, Odds odds){
         this.book.put(bookmaker, odds);
     }

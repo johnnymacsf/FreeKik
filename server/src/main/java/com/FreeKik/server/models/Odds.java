@@ -24,6 +24,10 @@ public class Odds implements Serializable {
         this.outcomes.put(name, Double.parseDouble(price));
     }
 
+    public Double getOutcomeOdds(String outcome){
+        return outcomes.get(outcome);
+    }
+
     public static class OddsDeserializer implements JsonDeserializer<Odds>{
         @Override
         public Odds deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
