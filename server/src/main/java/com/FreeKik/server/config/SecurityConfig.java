@@ -20,11 +20,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // allow these routes without authentication
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/user/stats").authenticated()
-                        //.requestMatchers("/user/**").permitAll()
-                        // everything else still requires auth
                         .anyRequest().authenticated()
                 )
                 .httpBasic(basic -> basic.disable())

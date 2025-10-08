@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class Match implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long key; //primary key id that we generate in the database table
+    private Long key;
 
     @Column(unique = true, nullable = false)
     @SerializedName("id")
@@ -24,7 +24,7 @@ public class Match implements Serializable {
     private String awayTeam;
     private int homeScore;
     private int awayScore;
-    private String finalResult = ""; //default is blank for now and we update it when the game finishes
+    private String finalResult = "";
     @SerializedName("commence_time")
     private String matchDate;
 
