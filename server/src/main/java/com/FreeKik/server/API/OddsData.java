@@ -15,7 +15,7 @@ public class OddsData {
     private static final String regions = "us";
     private static final String markets = "h2h";
 
-    public static JsonObject getAllOddsData() {
+    public static JsonArray getAllOddsData() {
         HttpResponse<String> response = null;
         try {
             HttpClient client = HttpClient.newHttpClient();
@@ -34,8 +34,8 @@ public class OddsData {
             e.printStackTrace();
         }
         Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(response.body(), JsonObject.class);
-        return jsonObject;
+        JsonArray jsonArray = gson.fromJson(response.body(), JsonArray.class);
+        return jsonArray;
     }
 
     public static JsonObject getMatchScore(String matchId){
