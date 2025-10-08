@@ -9,15 +9,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.util.HashMap;
 
 public class MatchHandler {
     public MatchMap getMatchMap(){
-        JsonObject object = OddsData.getAllOddsData();
         MatchMap mp = new MatchMap();
         Gson gson = new Gson();
-        JsonArray arr = object.getAsJsonArray();
+        JsonArray arr = OddsData.getAllOddsData();
 
         for(JsonElement element : arr){
             JsonObject matchObj = element.getAsJsonObject();
@@ -30,10 +29,10 @@ public class MatchHandler {
 
     public Match updateScore(Match match){
         JsonObject object = OddsData.getMatchScore(match.getMatchId());
-
+        /*
         LocalDate gameDate = LocalDate.parse(object.get("commence_time").toString());
         if(gameDate.isBefore(LocalDate.now())) { return match; }
-
+        */
         JsonArray scores = object.get("scores").getAsJsonArray();
         HashMap<String, Integer> map = new HashMap<>();
 
