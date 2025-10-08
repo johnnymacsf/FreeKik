@@ -6,7 +6,7 @@ import com.google.gson.*;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.util.HashMap;
 
 @Entity
@@ -26,11 +26,11 @@ public class Match implements Serializable {
     private int awayScore;
     private String finalResult = ""; //default is blank for now and we update it when the game finishes
     @SerializedName("commence_time")
-    private LocalDate matchDate;
+    private String matchDate;
 
     private OddsBook book;
 
-    public Match(String matchId, String homeTeam, String awayTeam, LocalDate matchDate) {
+    public Match(String matchId, String homeTeam, String awayTeam, String matchDate) {
         this.matchId = matchId;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
@@ -38,7 +38,7 @@ public class Match implements Serializable {
         this.book = new OddsBook();
     }
 
-    public Match(Long key, String matchId, String homeTeam, String awayTeam, LocalDate matchDate) {
+    public Match(Long key, String matchId, String homeTeam, String awayTeam, String matchDate) {
         this.key = key;
         this.matchId = matchId;
         this.homeTeam = homeTeam;
@@ -73,7 +73,7 @@ public class Match implements Serializable {
 
     public void setAwayScore(int score) { this.awayScore = score; }
 
-    public LocalDate getMatchDate() {
+    public String getMatchDate() {
         return matchDate;
     }
 
