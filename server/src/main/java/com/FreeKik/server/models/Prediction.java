@@ -14,7 +14,10 @@ public class Prediction {
     private String awayTeam;
     private String finalResult;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     private Long matchId;
 
     private String resultPrediction;
@@ -25,9 +28,9 @@ public class Prediction {
 
     public Prediction() {}
 
-    public Prediction(Long predictionId, Long userId, Long matchId, String result_prediction, String prediction_odds, Long pointsBet) {
+    public Prediction(Long predictionId, User userId, Long matchId, String result_prediction, String prediction_odds, Long pointsBet) {
         this.predictionId = predictionId;
-        this.userId = userId;
+        this.user = user;
         this.matchId = matchId;
         this.resultPrediction = result_prediction;
         this.predictionOdds = prediction_odds;
@@ -38,8 +41,8 @@ public class Prediction {
         return predictionId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUserId() {
+        return user;
     }
 
     public Long getMatchId() {
@@ -86,11 +89,19 @@ public class Prediction {
         this.pointsResult = pointsResult;
     }
 
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
     @Override
     public String toString() {
         return "Prediction{" +
                 "predictionId= " + predictionId +
-                ", userId= " + userId +
+                ", user= " + user +
                 ", matchId= " + matchId +
                 ", result_prediction= " + resultPrediction + '\'' +
                 ", prediction_odds= " + predictionOdds + '\'' +

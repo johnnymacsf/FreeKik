@@ -1,6 +1,7 @@
 package com.FreeKik.server.API;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.net.URI;
