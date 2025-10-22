@@ -45,7 +45,7 @@ public class UserController {
 
         User user = userService.findUserByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        UserStatsDto stats = new UserStatsDto(user.getPoints(), user.getWins(), user.getLosses());
+        UserStatsDto stats = new UserStatsDto(user.getUsername(), user.getPoints(), user.getWins(), user.getLosses());
         return ResponseEntity.ok(stats);
     }
 }

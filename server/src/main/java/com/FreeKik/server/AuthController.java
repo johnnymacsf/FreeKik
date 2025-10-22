@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -22,14 +24,15 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user)  {
+    public ResponseEntity<Map<String, String>> login(@RequestBody User user)  {
         User existingUser = userService.findUserByUsername(user.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("User with that username does not exist!"));
         if(!userService.checkPassword(user.getPassword(), existingUser.getPassword())){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password!");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error","Incorrect password!"));
         }
         String jwt = jwtService.generateToken(existingUser.getUsername());
-        return ResponseEntity.ok().header("Authorization", "Bearer " + jwt).body("Logged in as " + existingUser.getUsername());
+        //return ResponseEntity.ok().header("Authorization", "Bearer " + jwt).body("Logged in as " + existingUser.getUsername());
+        return ResponseEntity.ok(Map.of("token", jwt, "username", existingUser.getUsername()));
     }
 
     @PostMapping("/register")
