@@ -92,7 +92,8 @@ public class Match implements Serializable {
                 ", awayTeam='" + awayTeam + '\'' +
                 ", finalResult='" + finalResult + '\'' +
                 ", matchDate=" + matchDate +
-                '}';
+                ", OddsBook= " + book.toString() +
+                '}' + '\n';
     }
 
     public static class MatchDeserializer implements JsonDeserializer<Match> {

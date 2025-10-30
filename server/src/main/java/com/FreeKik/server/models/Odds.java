@@ -28,18 +28,37 @@ public class Odds implements Serializable {
         return outcomes.get(outcome);
     }
 
+    public void setBetType(String betType) {this.betType = betType;}
+
+    public void setLastUpdate(String lastUpdate) {this.lastUpdate = lastUpdate;}
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("BetType: " + betType +" LastUpdated: " + lastUpdate + " Outcomes: ");
+        if(outcomes != null)
+            outcomes.forEach((k, v) -> sb.append(k + ": " + v + " "));
+        return sb.toString();
+    }
+
     public static class OddsDeserializer implements JsonDeserializer<Odds>{
         @Override
         public Odds deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             JsonObject obj = jsonElement.getAsJsonObject();
             Gson gson = new Gson();
             Odds odds = gson.fromJson(obj, Odds.class);
-
-            if (obj.has("outcomes")) {
-                JsonArray outcomes = obj.getAsJsonObject("outcomes").getAsJsonArray();
-                for(JsonElement element : outcomes){
-                    JsonObject outcomeObj = element.getAsJsonObject();
-                    odds.addOuctome(outcomeObj.get("name").toString(), outcomeObj.get("price").toString());
+            if (obj.has("markets")) {
+                JsonArray markets = obj.getAsJsonObject("markets").getAsJsonArray();
+                for (JsonElement marketElement : markets) {
+                    JsonObject marketObj = marketElement.getAsJsonObject();
+                    odds.setBetType(marketObj.get("key").toString());
+                    if (marketObj.has("outcomes")) {
+                        JsonArray outcomes = marketObj.getAsJsonObject("outcomes").getAsJsonArray();
+                        for (JsonElement element : outcomes) {
+                            JsonObject outcomeObj = element.getAsJsonObject();
+                            odds.addOuctome(outcomeObj.get("name").toString(), outcomeObj.get("price").toString());
+                        }
+                    }
                 }
             }
             return odds;

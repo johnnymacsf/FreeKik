@@ -58,7 +58,7 @@ public class OddsData {
         return jsonObject;
     }
 
-    public static JsonObject getMatchOdds(String matchId){
+    public static JsonArray getMatchOdds(String matchId){
         HttpResponse<String> response = null;
         try {
             HttpClient client = HttpClient.newHttpClient();
@@ -75,7 +75,7 @@ public class OddsData {
             e.printStackTrace();
         }
         Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(response.body(), JsonObject.class);
-        return jsonObject;
+        JsonArray jsonArray = gson.fromJson(response.body(), JsonArray.class).get(0).getAsJsonObject().get("bookmakers").getAsJsonArray();
+        return jsonArray;
     }
 }
