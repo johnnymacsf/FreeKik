@@ -12,7 +12,6 @@ public class OddsHandler {
     public static OddsBook getBook(String matchId){
         OddsBook oddsBook = new OddsBook();
         JsonArray arr = OddsData.getMatchOdds(matchId);
-        Gson gson = new Gson();
         for(JsonElement element : arr){
             JsonObject obj = element.getAsJsonObject();
             if (obj.has("markets")) {

@@ -14,26 +14,21 @@ import java.util.HashMap;
 
 public class MatchHandler {
     public static MatchMap getMatchMap(){
-        //JsonObject object = OddsData.getAllOddsData();
         MatchMap mp = new MatchMap();
         Gson gson = new Gson();
-        JsonArray arr = OddsData.getAllOddsData();//object.getAsJsonArray();
+        JsonArray arr = OddsData.getAllOddsData();
 
         for(JsonElement element : arr){
             JsonObject matchObj = element.getAsJsonObject();
             Match match = gson.fromJson(matchObj, Match.class);
             mp.addMatch(matchObj.get("id").toString(), match);
         }
-
+        updateAllBooks(mp);
         return mp;
     }
 
     public Match updateScore(Match match){
         JsonObject object = OddsData.getMatchScore(match.getMatchId());
-        /*
-        LocalDate gameDate = LocalDate.parse(object.get("commence_time").toString());
-        if(gameDate.isBefore(LocalDate.now())) { return match; }
-        */
         JsonArray scores = object.get("scores").getAsJsonArray();
         HashMap<String, Integer> map = new HashMap<>();
 

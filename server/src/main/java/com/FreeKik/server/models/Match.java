@@ -79,6 +79,10 @@ public class Match implements Serializable {
 
     public void setBook(OddsBook book) { this.book = book; }
 
+    public OddsBook getBook() {
+        return book;
+    }
+
     public HashMap<String, Double> getAvgOdds(){
         return this.book.getAvg(this.homeTeam, this.awayTeam);
     }
