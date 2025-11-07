@@ -4,11 +4,13 @@ public class UserStatsDto {
     private long points;
     private long wins;
     private long losses;
+    private String username;
 
-    public UserStatsDto(long points, long wins, long losses) {
+    public UserStatsDto(String username, long points, long wins, long losses) {
         this.points = points;
         this.wins = wins;
         this.losses = losses;
+        this.username = username;
     }
 
     public long getPoints() {
@@ -34,4 +36,8 @@ public class UserStatsDto {
     public void setLosses(long losses) {
         this.losses = losses;
     }
+
+    public void setUsername(String username){ this.username = username; }
+
+    public String getUsername(){ return username; }
 }
