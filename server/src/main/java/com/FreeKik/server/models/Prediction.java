@@ -5,35 +5,36 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Prediction {
+public class Prediction implements Comparable<Prediction>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long predictionId;
 
-    private String homeTeam;
-    private String awayTeam;
-    private String finalResult;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Long userId;
 
     private Long matchId;
 
+    private String dateMade;
+    private String homeTeam;
+    private String awayTeam;
+    private String finalResult;
     private String resultPrediction;
-    private String predictionOdds;
+    private Long predictionOdds;
     private Long pointsBet;
-    private Boolean correctPrediction = false;
     private Long pointsResult = 0L;
+    private Boolean correctPrediction = false;
 
     public Prediction() {}
 
-    public Prediction(Long predictionId, User userId, Long matchId, String result_prediction, String prediction_odds, Long pointsBet) {
+    public Prediction(Long predictionId, Long userId, Long matchId, String date, String result_prediction, String prediction_odds, Long pointsBet) {
         this.predictionId = predictionId;
-        this.user = user;
+        this.userId = userId;
         this.matchId = matchId;
+        this.dateMade = date;
         this.resultPrediction = result_prediction;
-        this.predictionOdds = prediction_odds;
+        this.predictionOdds = Long.parseLong(prediction_odds);
         this.pointsBet = pointsBet;
     }
 
@@ -41,8 +42,8 @@ public class Prediction {
         return predictionId;
     }
 
-    public User getUserId() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
     public Long getMatchId() {
@@ -53,55 +54,48 @@ public class Prediction {
         return resultPrediction;
     }
 
-    public void setResult_prediction(String result_prediction) {
-        this.resultPrediction = result_prediction;
-    }
-
-    public String getPrediction_odds() {
+    public Long getPrediction_odds() {
         return predictionOdds;
-    }
-
-    public void setPrediction_odds(String prediction_odds) {
-        this.predictionOdds = prediction_odds;
     }
 
     public Long getPointsBet() {
         return pointsBet;
     }
 
-    public void setPointsBet(Long pointsBet) {
-        this.pointsBet = pointsBet;
-    }
-
     public Boolean getCorrectPrediction() {
         return correctPrediction;
-    }
-
-    public void setCorrectPrediction(Boolean correctPrediction) {
-        this.correctPrediction = correctPrediction;
     }
 
     public Long getPointsResult() {
         return pointsResult;
     }
 
-    public void setPointsResult(Long pointsResult) {
-        this.pointsResult = pointsResult;
+    public String getDate() { return this.dateMade; }
+
+    public Long getPotentialPayout() {
+        pointsResult = pointsBet * predictionOdds;
+        return pointsResult;
     }
 
-    public void setUser(User user){
-        this.user = user;
+    public Long payout() {
+        if(correctPrediction){
+            return getPotentialPayout();
+        }
+        else {
+            return 0L;
+        }
     }
 
-    public User getUser(){
-        return user;
+    public void updateFinalResult(String result){
+        finalResult = result;
+        correctPrediction = finalResult.equals(resultPrediction);
     }
 
     @Override
     public String toString() {
         return "Prediction{" +
                 "predictionId= " + predictionId +
-                ", user= " + user +
+                ", userId= " + userId +
                 ", matchId= " + matchId +
                 ", result_prediction= " + resultPrediction + '\'' +
                 ", prediction_odds= " + predictionOdds + '\'' +
@@ -109,5 +103,10 @@ public class Prediction {
                 ", correctPrediction= " + correctPrediction +
                 ", pointsResult= " + pointsResult +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Prediction p){
+        return p.getDate().compareTo(this.dateMade);
     }
 }
