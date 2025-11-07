@@ -34,7 +34,7 @@ public class PredictionService {
     public Prediction findPredictionByPredictionId(Long predictionId) {
         return predictionRepo.findPredictionByPredictionId(predictionId).orElseThrow(() -> new IllegalArgumentException("Prediction with id " + predictionId + " not found"));
     }
-    public List<Prediction> findPredictionsByMatchId(Long matchId) {
+    public List<Prediction> findPredictionsByMatchId(String matchId) {
         return predictionRepo.findPredictionsByMatchId(matchId).orElseThrow(() -> new IllegalArgumentException("No predictions for match " + matchId));
     }
 }

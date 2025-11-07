@@ -14,7 +14,7 @@ public class Prediction implements Comparable<Prediction>{
     @JoinColumn(name = "user_id", nullable = false)
     private Long userId;
 
-    private Long matchId;
+    private String matchId;
 
     private String dateMade;
     private String homeTeam;
@@ -28,7 +28,7 @@ public class Prediction implements Comparable<Prediction>{
 
     public Prediction() {}
 
-    public Prediction(Long predictionId, Long userId, Long matchId, String date, String result_prediction, String prediction_odds, Long pointsBet) {
+    public Prediction(Long predictionId, Long userId, String matchId, String date, String result_prediction, String prediction_odds, Long pointsBet) {
         this.predictionId = predictionId;
         this.userId = userId;
         this.matchId = matchId;
@@ -46,7 +46,7 @@ public class Prediction implements Comparable<Prediction>{
         return userId;
     }
 
-    public Long getMatchId() {
+    public String getMatchId() {
         return matchId;
     }
 

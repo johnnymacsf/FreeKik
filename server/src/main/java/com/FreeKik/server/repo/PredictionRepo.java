@@ -10,6 +10,6 @@ public interface PredictionRepo extends JpaRepository<Prediction, Long> {
     void deletePredictionByPredictionId(Long predictionId);
 
     Optional<List<Prediction>> findPredictionsByUserId(Long userId);
-    Optional<List<Prediction>> findPredictionsByMatchId(Long matchId);
+    Optional<List<Prediction>> findPredictionsByMatchId(String matchId);
     Optional<Prediction> findPredictionByPredictionId(Long predictionId);
 }

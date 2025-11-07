@@ -36,7 +36,7 @@ public class PredictionController {
     }
 
     @PutMapping("/update/match/{id}")
-    public ResponseEntity<List<Prediction>> updateByMatch(@PathVariable("id") Long matchId, @RequestBody String outcome){
+    public ResponseEntity<List<Prediction>> updateByMatch(@PathVariable("id") String matchId, @RequestBody String outcome){
         List<Prediction> predictions = predictionService.findPredictionsByMatchId(matchId);
         predictions.forEach((p) -> p.updateFinalResult(outcome));
         return new ResponseEntity<>(predictions, HttpStatus.OK);
