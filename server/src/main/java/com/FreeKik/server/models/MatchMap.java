@@ -20,4 +20,11 @@ public class MatchMap {
     public void merge(MatchMap otherMap){
         otherMap.getMatches().forEach(this::addMatch);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        matches.forEach((k, v)-> sb.append(v.toString()));
+        return sb.toString();
+    }
 }

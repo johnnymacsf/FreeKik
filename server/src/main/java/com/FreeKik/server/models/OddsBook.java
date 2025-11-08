@@ -33,6 +33,13 @@ public class OddsBook implements Serializable {
         this.book.put(bookmaker, odds);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        book.forEach((k, v) -> sb.append("Bookmaker: " + k + ": " + v.toString() + " "));
+        return sb.toString();
+    }
+
     public static class BookDeserializer implements JsonDeserializer<OddsBook> {
         @Override
         public OddsBook deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {

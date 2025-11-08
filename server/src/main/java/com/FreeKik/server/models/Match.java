@@ -27,6 +27,10 @@ public class Match implements Serializable {
 
     private OddsBook book;
 
+    public Match(){
+        this.book = new OddsBook();
+    }
+
     public Match(String matchId, String homeTeam, String awayTeam, String matchDate) {
         this.matchId = matchId;
         this.homeTeam = homeTeam;
@@ -65,6 +69,10 @@ public class Match implements Serializable {
 
     public void setBook(OddsBook book) { this.book = book; }
 
+    public OddsBook getBook() {
+        return book;
+    }
+
     public HashMap<String, Double> getAvgOdds(){
         return this.book.getAvg(this.homeTeam, this.awayTeam);
     }
@@ -77,7 +85,8 @@ public class Match implements Serializable {
                 ", awayTeam='" + awayTeam + '\'' +
                 ", finalResult='" + finalResult + '\'' +
                 ", matchDate=" + matchDate +
-                '}';
+                ", OddsBook= " + book.toString() +
+                '}' + '\n';
     }
 
     public static class MatchDeserializer implements JsonDeserializer<Match> {

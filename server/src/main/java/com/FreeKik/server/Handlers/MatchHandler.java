@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 import java.util.HashMap;
 
 public class MatchHandler {
-    public MatchMap getMatchMap(){
+    public static MatchMap getMatchMap(){
         MatchMap mp = new MatchMap();
         Gson gson = new Gson();
         JsonArray arr = OddsData.getAllOddsData();
@@ -23,16 +23,12 @@ public class MatchHandler {
             Match match = gson.fromJson(matchObj, Match.class);
             mp.addMatch(matchObj.get("id").toString(), match);
         }
-
+        updateAllBooks(mp);
         return mp;
     }
 
     public Match updateScore(Match match){
         JsonObject object = OddsData.getMatchScore(match.getMatchId());
-        /*
-        LocalDate gameDate = LocalDate.parse(object.get("commence_time").toString());
-        if(gameDate.isBefore(LocalDate.now())) { return match; }
-        */
         JsonArray scores = object.get("scores").getAsJsonArray();
         HashMap<String, Integer> map = new HashMap<>();
 
@@ -61,9 +57,13 @@ public class MatchHandler {
         return match;
     }
 
-    public Match updateBook(Match match){
+    public static void updateBook(Match match){
         OddsBook book = OddsHandler.getBook(match.getMatchId());
         match.setBook(book);
-        return match;
+    }
+
+    public static void updateAllBooks(MatchMap mp){
+        HashMap<String, Match> matches = mp.getMatches();
+        matches.forEach((k, v) -> updateBook(v));
     }
 }
