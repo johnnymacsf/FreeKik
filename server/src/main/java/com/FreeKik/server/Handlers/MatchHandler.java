@@ -16,8 +16,8 @@ public class MatchHandler {
     public static MatchMap getMatchMap(){
         MatchMap mp = new MatchMap();
         Gson gson = new Gson();
-        JsonArray arr = OddsData.getAllOddsData();
-
+        //JsonArray arr = OddsData.getAllOddsData();
+        JsonArray arr = OddsData.getUpcomingMatches();
         for(JsonElement element : arr){
             JsonObject matchObj = element.getAsJsonObject();
             Match match = gson.fromJson(matchObj, Match.class);

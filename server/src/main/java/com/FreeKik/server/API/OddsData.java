@@ -28,9 +28,24 @@ public class OddsData {
                     .build();
 
             response = client.send(request, BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        JsonArray jsonArray = gson.fromJson(response.body(), JsonArray.class);
+        return jsonArray;
+    }
 
-            //System.out.println(response.statusCode());
-            //System.out.println(response.body());
+    public static JsonArray getUpcomingMatches() {
+        HttpResponse<String> response = null;
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.the-odds-api.com/v4/sports/" + sportsKey
+                            + "/events?apiKey=" + apiKey))
+                    .build();
+
+            response = client.send(request, BodyHandlers.ofString());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -45,7 +45,7 @@ public class MatchController {
     public List<ResponseEntity<Match>> addAllMatches() {
         ArrayList<ResponseEntity<Match>> list = new ArrayList<>();
         MatchMap mm = MatchHandler.getMatchMap();
-        MatchHandler.updateAllBooks(mm);
+        //MatchHandler.updateAllBooks(mm);
         HashMap<String, Match> hm = mm.getMatches();
         hm.forEach((id, match) -> list.add(addMatch(match)));
         return list;
