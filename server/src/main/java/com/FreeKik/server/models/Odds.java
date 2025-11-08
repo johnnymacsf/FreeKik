@@ -1,5 +1,8 @@
 package com.FreeKik.server.models;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.gson.*;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,6 +10,7 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Odds implements Serializable {
     @SerializedName("key")
     private String betType;
@@ -14,23 +18,45 @@ public class Odds implements Serializable {
     private String lastUpdate;
     private HashMap<String, Double> outcomes;
 
+    public Odds(){
+    }
+
     public Odds(String betType, String lastupdate){
         this.betType = betType;
         this.lastUpdate = lastupdate;
         this.outcomes = new HashMap<>();
     }
 
-    public void addOuctome(String name, String price){
-        this.outcomes.put(name, Double.parseDouble(price));
-    }
 
     public Double getOutcomeOdds(String outcome){
-        return outcomes.get(outcome);
+        return outcomes.getOrDefault(outcome, 0.0);
     }
 
     public void setBetType(String betType) {this.betType = betType;}
 
+    public String getBetType(){
+        return betType;
+    }
+
     public void setLastUpdate(String lastUpdate) {this.lastUpdate = lastUpdate;}
+
+    public String getLastUpdate(){
+        return lastUpdate;
+    }
+
+    @JsonAnyGetter
+    public HashMap<String, Double> getOutcomes(){
+        return outcomes;
+    }
+
+    @JsonAnySetter
+    public void addOutcome(String name, String price){
+        this.outcomes.put(name, Double.parseDouble(price));
+    }
+
+    public void setOutcomes(HashMap<String, Double> outcomes){
+        this.outcomes = outcomes;
+    }
 
     @Override
     public String toString() {
@@ -56,7 +82,7 @@ public class Odds implements Serializable {
                         JsonArray outcomes = marketObj.getAsJsonObject("outcomes").getAsJsonArray();
                         for (JsonElement element : outcomes) {
                             JsonObject outcomeObj = element.getAsJsonObject();
-                            odds.addOuctome(outcomeObj.get("name").toString(), outcomeObj.get("price").toString());
+                            odds.addOutcome(outcomeObj.get("name").toString(), outcomeObj.get("price").toString());
                         }
                     }
                 }
