@@ -29,9 +29,9 @@ public class MatchService {
         return matchRepo.save(match);
     }
 
-    public void deleteMatch(Long id){ matchRepo.deleteMatchByMatchId(id); }
+    public void deleteMatch(String id){ matchRepo.deleteMatchByMatchId(id); }
 
-    public Match findMatchById(Long id){
+    public Match findMatchById(String id){
         return matchRepo.findMatchByMatchId(id).orElseThrow(() -> new IllegalArgumentException("Match with id " + id + " not found"));
     }
 

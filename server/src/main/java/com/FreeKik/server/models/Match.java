@@ -30,6 +30,10 @@ public class Match implements Serializable {
 
     private OddsBook book;
 
+    public Match(){
+        this.book = new OddsBook();
+    }
+
     public Match(String matchId, String homeTeam, String awayTeam, String matchDate) {
         this.matchId = matchId;
         this.homeTeam = homeTeam;

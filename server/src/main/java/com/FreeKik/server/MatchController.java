@@ -30,7 +30,7 @@ public class MatchController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Match> getMatchById(@PathVariable("id") Long id) {
+    public ResponseEntity<Match> getMatchById(@PathVariable("id") String id) {
         Match match = matchService.findMatchById(id);
         return new ResponseEntity<>(match, HttpStatus.OK);
     }
@@ -50,7 +50,7 @@ public class MatchController {
     }
 
     @GetMapping("/odds/{id}")
-    public ResponseEntity<OddsBook> getMatchOdds(@PathVariable("id") Long id){
+    public ResponseEntity<OddsBook> getMatchOdds(@PathVariable("id") String id){
         Match match = matchService.findMatchById(id);
         MatchHandler.updateBook(match);
         OddsBook book = match.getBook();

@@ -29,8 +29,8 @@ public class OddsData {
 
             response = client.send(request, BodyHandlers.ofString());
 
-            //System.out.println(response.statusCode());
-            //System.out.println(response.body());
+            System.out.println(response.statusCode());
+            System.out.println(response.body());
         } catch (Exception e) {
             e.printStackTrace();
         }
