@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -30,6 +32,7 @@ public class AuthController {
         }
         String jwt = jwtService.generateToken(existingUser.getUsername());
         return ResponseEntity.ok().header("Authorization", "Bearer " + jwt).body("Logged in as " + existingUser.getUsername());
+        //return ResponseEntity.ok(Map.of("token", jwt, "username", existingUser.getUsername()));
     }
 
     @PostMapping("/register")
