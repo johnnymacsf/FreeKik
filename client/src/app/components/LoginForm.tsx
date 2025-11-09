@@ -16,14 +16,8 @@ export default function LoginForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     try {
-      const response = await API.post('/auth/login', { username, password });
-      const token = response.headers['authorization']?.split(' ')[1];
-      if(token){
-        localStorage.setItem('token', token);
-        console.log("JWT stored as: ", token);
-      }else{
-        console.log("JWT not found");
-      }
+      const { data } = await API.post('/auth/login', { username, password });
+      localStorage.setItem('token', data.token);
       onSuccess();
       onClose();
       alert('Successfully logged in');
