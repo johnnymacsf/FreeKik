@@ -12,9 +12,6 @@ import java.util.HashMap;
 @Entity
 public class Match implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long key;
-
     @Column(unique = true, nullable = false)
     @SerializedName("id")
     private String matchId; //matchId from the API
@@ -30,25 +27,16 @@ public class Match implements Serializable {
 
     private OddsBook book;
 
+    public Match(){
+        this.book = new OddsBook();
+    }
+
     public Match(String matchId, String homeTeam, String awayTeam, String matchDate) {
         this.matchId = matchId;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.matchDate = matchDate;
         this.book = new OddsBook();
-    }
-
-    public Match(Long key, String matchId, String homeTeam, String awayTeam, String matchDate) {
-        this.key = key;
-        this.matchId = matchId;
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
-        this.matchDate = matchDate;
-        this.book = new OddsBook();
-    }
-
-    public Long getKey() {
-        return key;
     }
 
     public String getMatchId() {
@@ -90,7 +78,6 @@ public class Match implements Serializable {
     @Override
     public String toString() {
         return "Match{" +
-                "id=" + key +
                 ", matchId='" + matchId + '\'' +
                 ", homeTeam='" + homeTeam + '\'' +
                 ", awayTeam='" + awayTeam + '\'' +

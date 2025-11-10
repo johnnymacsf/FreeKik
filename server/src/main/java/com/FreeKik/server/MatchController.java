@@ -23,6 +23,7 @@ public class MatchController {
         this.matchService = matchService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/findAll")
     public ResponseEntity<List<Match>> getAllMatches() {
         List<Match> matches = matchService.findAllMatches();
