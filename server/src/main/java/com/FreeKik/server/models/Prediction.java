@@ -12,10 +12,9 @@ public class Prediction implements Comparable<Prediction>{
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Long userId;
+    private User user;
 
     private String matchId;
-
     private String dateMade;
     private String homeTeam;
     private String awayTeam;
@@ -28,9 +27,9 @@ public class Prediction implements Comparable<Prediction>{
 
     public Prediction() {}
 
-    public Prediction(Long predictionId, Long userId, String matchId, String date, String result_prediction, String prediction_odds, Long pointsBet) {
+    public Prediction(Long predictionId, User user, String matchId, String date, String result_prediction, String prediction_odds, Long pointsBet) {
         this.predictionId = predictionId;
-        this.userId = userId;
+        this.user = user;
         this.matchId = matchId;
         this.dateMade = date;
         this.resultPrediction = result_prediction;
@@ -42,8 +41,12 @@ public class Prediction implements Comparable<Prediction>{
         return predictionId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 
     public String getMatchId() {
@@ -95,7 +98,7 @@ public class Prediction implements Comparable<Prediction>{
     public String toString() {
         return "Prediction{" +
                 "predictionId= " + predictionId +
-                ", userId= " + userId +
+                ", user= " + user +
                 ", matchId= " + matchId +
                 ", result_prediction= " + resultPrediction + '\'' +
                 ", prediction_odds= " + predictionOdds + '\'' +

@@ -41,7 +41,7 @@ export default function MatchesPage() {
         <div className="bg-white text-black w-full min-h-screen p-4">
             <h1 className="text-2xl font-bold mb-4">Matches</h1>
             {matches.map(match => (
-                <MatchesCard key={match.matchId} homeTeam={match.homeTeam} awayTeam={match.awayTeam} date={match.matchDate}/>
+                <MatchesCard key={match.matchId} homeTeam={match.homeTeam} awayTeam={match.awayTeam} date={match.matchDate} matchId={match.matchId}/>
             ))}
         </div>
     )
