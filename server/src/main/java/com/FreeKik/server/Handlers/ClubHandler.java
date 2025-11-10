@@ -10,14 +10,14 @@ import java.util.HashMap;
 
 public class ClubHandler {
     private final WebDriver driver;
-    private final Scraper scraper;
+    private static Scraper scraper;
 
     public ClubHandler(){
         driver = new SafariDriver();
         scraper = new Scraper(driver);
     }
 
-    public HashMap<String, Club> getAllClubs(){
+    public static HashMap<String, Club> getAllClubs(){
         return scraper.scrapeForTeams();
     }
 
@@ -25,11 +25,11 @@ public class ClubHandler {
         return scraper.scrapeForTeamStats(url);
     }
 
-    public void setStatTable(Club club){
+    public static void setStatTable(Club club){
         club.setTable(scraper.scrapeForTeamStats(club.getUrl()));
     }
 
-    public void setAllStatTables(HashMap<String, Club> clubs){
+    public static void setAllStatTables(HashMap<String, Club> clubs){
         clubs.forEach((name, club) -> {
             setStatTable(club);
         });
