@@ -45,8 +45,10 @@ public class MatchController {
     @PostMapping("/populate")
     public List<ResponseEntity<Match>> addAllMatches() {
         ArrayList<ResponseEntity<Match>> list = new ArrayList<>();
-        HashMap<String, Match> mp = MatchHandler.getMatchMap().getMatches();
-        mp.forEach((id, match) -> list.add(addMatch(match)));
+        MatchMap mm = MatchHandler.getMatchMap();
+        //MatchHandler.updateAllBooks(mm);
+        HashMap<String, Match> hm = mm.getMatches();
+        hm.forEach((id, match) -> list.add(addMatch(match)));
         return list;
     }
 
