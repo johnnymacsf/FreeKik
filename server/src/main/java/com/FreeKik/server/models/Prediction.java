@@ -52,17 +52,39 @@ public class Prediction implements Comparable<Prediction>{
     public String getMatchId() {
         return matchId;
     }
+    public void setMatchId(String matchId){
+        this.matchId = matchId;
+    }
+
+    public void setAwayTeam(String awayTeam){
+        this.awayTeam = awayTeam;
+    }
+    public void setHomeTeam(String homeTeam){
+        this.homeTeam = homeTeam;
+    }
 
     public String getResult_prediction() {
         return resultPrediction;
+    }
+
+    public void setResult_prediction(String resultPrediction){
+        this.resultPrediction = resultPrediction;
     }
 
     public Long getPrediction_odds() {
         return predictionOdds;
     }
 
+    public void setPrediction_odds(Long predictionOdds){
+        this.predictionOdds = predictionOdds;
+    }
+
     public Long getPointsBet() {
         return pointsBet;
+    }
+
+    public void setPointsBet(Long pointsBet){
+        this.pointsBet = pointsBet;
     }
 
     public Boolean getCorrectPrediction() {
@@ -74,6 +96,10 @@ public class Prediction implements Comparable<Prediction>{
     }
 
     public String getDate() { return this.dateMade; }
+
+    public void setDate(String dateMade){
+        this.dateMade = dateMade;
+    }
 
     public Long getPotentialPayout() {
         pointsResult = pointsBet * predictionOdds;
