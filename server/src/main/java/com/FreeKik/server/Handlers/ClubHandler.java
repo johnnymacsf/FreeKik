@@ -35,6 +35,14 @@ public class ClubHandler {
         });
     }
 
+    public static HashMap<String, Club> cleanClubMap(HashMap<String, Club> clubMap){
+        HashMap<String, Club> newClubMap = new HashMap<>();
+        clubMap.forEach((name, club) -> {
+            newClubMap.computeIfAbsent(name.toLowerCase().replaceAll(" ", ""), p -> club);
+        });
+        return newClubMap;
+    }
+
     public void shutDownDriver(){
         driver.quit();
     }
