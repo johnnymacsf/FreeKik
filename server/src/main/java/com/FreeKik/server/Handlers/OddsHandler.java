@@ -3,7 +3,6 @@ package com.FreeKik.server.Handlers;
 import com.FreeKik.server.API.OddsData;
 import com.FreeKik.server.models.Odds;
 import com.FreeKik.server.models.OddsBook;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -23,7 +22,7 @@ public class OddsHandler {
                         JsonArray outcomes = marketObj.getAsJsonArray("outcomes");
                         for (JsonElement outcome : outcomes) {
                             JsonObject outcomeObj = outcome.getAsJsonObject();
-                            odds.addOuctome(outcomeObj.get("name").toString(), outcomeObj.get("price").toString());
+                            odds.addOutcome(outcomeObj.get("name").toString(), outcomeObj.get("price").toString());
                         }
                     }
                     oddsBook.addOdds(obj.get("title").toString(), odds);

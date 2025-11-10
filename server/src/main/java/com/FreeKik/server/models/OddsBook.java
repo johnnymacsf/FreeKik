@@ -1,11 +1,13 @@
 package com.FreeKik.server.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.gson.*;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OddsBook implements Serializable {
     private HashMap<String, Odds> book;
 
@@ -38,6 +40,10 @@ public class OddsBook implements Serializable {
         StringBuilder sb = new StringBuilder();
         book.forEach((k, v) -> sb.append("Bookmaker: " + k + ": " + v.toString() + " "));
         return sb.toString();
+    }
+
+    public HashMap<String, Odds> getBook() {
+        return book;
     }
 
     public static class BookDeserializer implements JsonDeserializer<OddsBook> {
