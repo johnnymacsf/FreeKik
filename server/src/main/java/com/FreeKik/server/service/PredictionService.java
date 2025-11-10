@@ -29,7 +29,7 @@ public class PredictionService {
     public void deletePrediction(Long id){ predictionRepo.deletePredictionByPredictionId(id); }
 
     public List<Prediction> findPredictionsByUserId(Long userId) {
-        return predictionRepo.findPredictionsByUserId(userId).orElseThrow(() -> new IllegalArgumentException("User with id " + userId + " not found"));
+        return predictionRepo.findPredictionsByUser_UserId(userId).orElseThrow(() -> new IllegalArgumentException("User with id " + userId + " not found"));
     }
     public Prediction findPredictionByPredictionId(Long predictionId) {
         return predictionRepo.findPredictionByPredictionId(predictionId).orElseThrow(() -> new IllegalArgumentException("Prediction with id " + predictionId + " not found"));
