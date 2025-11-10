@@ -39,8 +39,6 @@ public class Match implements Serializable {
         this.book = new OddsBook();
     }
 
-    public Match() {}
-
     public String getMatchId() {
         return matchId;
     }

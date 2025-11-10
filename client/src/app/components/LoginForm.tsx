@@ -17,6 +17,7 @@ export default function LoginForm({
     e.preventDefault();
     try {
       const { data } = await API.post('/auth/login', { username, password });
+      console.log("token is " + data.token);
       localStorage.setItem('token', data.token);
       onSuccess();
       onClose();
