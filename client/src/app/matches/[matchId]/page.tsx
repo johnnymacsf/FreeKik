@@ -30,7 +30,7 @@ export default function MatchPage() {
     const [match, setMatch] = useState<Match |null>(null);
     const [formOpen, setFormOpen] = useState(false);
     const [resultPrediction, setResultPrediction] = useState("");
-    const [pointsBet, setPointsBet] = useState(0);
+    const [pointsBet, setPointsBet] = useState("");
 
     const handleFormOpen = () => setFormOpen(true);
     const handleFormClose = () => setFormOpen(false);
@@ -53,11 +53,12 @@ export default function MatchPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Submit clicked!");
-        if(!resultPrediction || pointsBet <= 0){
+        const points = Number(pointsBet)
+        if(!resultPrediction || points <= 0){
             return;
         }
         try{
-            console.log(match?.matchId + ", " + pointsBet + ", " + username + ", " + resultPrediction);
+            console.log(match?.matchId + ", " + points + ", " + username + ", " + resultPrediction);
             const response = await API.post("/prediction/add", {
                 matchId: match?.matchId,
                 username: username,
@@ -98,7 +99,7 @@ export default function MatchPage() {
                                     <option value={`${match?.awayTeam}-win`}>{match?.awayTeam}</option>
                                 </select>
                                 <label className="block mb-2 font-semibold text-black">Points Bet</label>
-                                <input type="number" placeholder="Points" className="border p-2 w-full mb-4 rounded" value={pointsBet} onChange={(e) => setPointsBet(Number(e.target.value))}/>
+                                <input type="number" placeholder="Points" className="border p-2 w-full mb-4 rounded" value={pointsBet} onChange={(e) => setPointsBet(e.target.value)}/>
                                 <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-300">Submit</button>
                             </form>
                         </div>
