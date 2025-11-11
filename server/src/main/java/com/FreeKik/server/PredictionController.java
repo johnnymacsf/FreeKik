@@ -30,9 +30,14 @@ public class PredictionController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Prediction> addPrediction(@RequestBody Prediction prediction) {
-        Prediction newPrediction = predictionService.addPrediction(prediction);
-        return new ResponseEntity<>(newPrediction, HttpStatus.CREATED);
+    public ResponseEntity<Prediction> addPrediction(@RequestBody AddPredictionDto request) {
+        Prediction newPrediction = new Prediction();
+        newPrediction.setMatchId(request.getMatchId());
+        newPrediction.setResult_prediction(request.getResultPrediction());
+        newPrediction.setPointsBet(request.getPointsBet());
+
+        Prediction prediction = predictionService.addPrediction(newPrediction, request.getUsername());
+        return new ResponseEntity<>(prediction, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/match/{id}")

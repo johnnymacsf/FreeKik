@@ -18,7 +18,11 @@ export default function LoginForm({
     try {
       const { data } = await API.post('/auth/login', { username, password });
       console.log("token is " + data.token);
+      console.log("user id is " + data.userId)
       localStorage.setItem('token', data.token);
+      localStorage.setItem('userId', data.userId)
+      console.log("username is " + data.username);
+      localStorage.setItem('username', data.username)
       onSuccess();
       onClose();
       alert('Successfully logged in');

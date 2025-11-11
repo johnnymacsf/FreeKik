@@ -1,5 +1,6 @@
 package com.FreeKik.server.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -24,6 +25,7 @@ public class User implements Serializable {
     private String role = "USER";
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @JsonManagedReference
     private List<Prediction> predictions = new ArrayList<>();
 
     public User() {
