@@ -2,6 +2,7 @@ package com.FreeKik.server.models;
 
 import com.FreeKik.server.WebScraping.Scraper;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -12,6 +13,7 @@ public class Club {
     private String name;
     private String url;
     private String image;
+    @Embedded
     private StatTable table;
 
     public Club(){}

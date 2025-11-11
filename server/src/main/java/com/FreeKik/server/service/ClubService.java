@@ -29,10 +29,10 @@ public class ClubService {
         return clubRepo.save(club);
     }
 
-    public void deleteClub(String name){ clubRepo.deleteClubByClubName(name); }
+    public void deleteClub(String name){ clubRepo.deleteClubByName(name); }
 
     public Club findClubByName(String name){
-        return clubRepo.findClubByClubName(name).orElseThrow(() -> new IllegalArgumentException("Club called " + name + " not found"));
+        return clubRepo.findClubByName(name).orElseThrow(() -> new IllegalArgumentException("Club called " + name + " not found"));
     }
 
 }
