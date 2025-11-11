@@ -1,4 +1,4 @@
-package com.FreeKik.server;
+package com.FreeKik.server.Controllers;
 
 import com.FreeKik.server.Handlers.MatchHandler;
 import com.FreeKik.server.models.Match;

@@ -1,5 +1,6 @@
-package com.FreeKik.server;
+package com.FreeKik.server.Controllers;
 
+import com.FreeKik.server.Handlers.UserStatsDto;
 import com.FreeKik.server.models.User;
 import com.FreeKik.server.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")

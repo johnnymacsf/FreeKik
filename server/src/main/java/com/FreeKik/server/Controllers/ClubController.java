@@ -1,13 +1,8 @@
-package com.FreeKik.server;
+package com.FreeKik.server.Controllers;
 
 import com.FreeKik.server.Handlers.ClubHandler;
-import com.FreeKik.server.Handlers.MatchHandler;
 import com.FreeKik.server.models.Club;
-import com.FreeKik.server.models.Match;
-import com.FreeKik.server.models.MatchMap;
-import com.FreeKik.server.models.OddsBook;
 import com.FreeKik.server.service.ClubService;
-import com.FreeKik.server.service.MatchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
