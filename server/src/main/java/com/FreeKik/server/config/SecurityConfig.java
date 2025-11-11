@@ -31,6 +31,8 @@ public class SecurityConfig {
                         .requestMatchers("/match/populate").permitAll()
                         .requestMatchers("/match/find/**").permitAll()
                         .requestMatchers("/match/findAll").permitAll()
+                        .requestMatchers("/prediction/find/user/**").permitAll()
+                        .requestMatchers("/prediction/add").authenticated()
                         .requestMatchers("/user/stats").authenticated()
                         .anyRequest().authenticated()
                 )

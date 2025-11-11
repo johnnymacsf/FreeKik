@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface PredictionRepo extends JpaRepository<Prediction, Long> {
     void deletePredictionByPredictionId(Long predictionId);
 
-    Optional<List<Prediction>> findPredictionsByUser_UserId(Long userId);
+    List<Prediction> findPredictionsByUser_UserId(Long userId);
     Optional<List<Prediction>> findPredictionsByMatchId(String matchId);
     Optional<Prediction> findPredictionByPredictionId(Long predictionId);
 }

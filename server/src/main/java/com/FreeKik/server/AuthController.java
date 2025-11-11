@@ -34,7 +34,8 @@ public class AuthController {
         //return ResponseEntity.ok().header("Authorization", "Bearer " + jwt).body("Logged in as " + existingUser.getUsername());
         return ResponseEntity.ok(Map.of(
                 "token", jwt,
-                "username", existingUser.getUsername()
+                "username", existingUser.getUsername(),
+                "userId", existingUser.getUserId().toString()
         ));
     }
 

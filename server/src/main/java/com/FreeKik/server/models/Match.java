@@ -75,6 +75,7 @@ public class Match implements Serializable {
         return this.book.getAvg(this.homeTeam, this.awayTeam);
     }
 
+    //public void setOddsToBookmaker()
     @Override
     public String toString() {
         return "Match{" +
