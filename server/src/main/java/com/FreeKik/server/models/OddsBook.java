@@ -21,9 +21,9 @@ public class OddsBook implements Serializable {
         double awayOdds = 0.0;
         double drawOdds = 0.0;
         for(Odds odds : this.book.values()){
-            homeOdds += odds.getOutcomeOdds(home);
-            awayOdds += odds.getOutcomeOdds(away);
-            drawOdds += odds.getOutcomeOdds("Draw");
+            homeOdds += odds.getOutcomeOdds(home) != null ? odds.getOutcomeOdds(home) : 0;
+            awayOdds += odds.getOutcomeOdds(away) != null ? odds.getOutcomeOdds(away) : 0;
+            drawOdds += odds.getOutcomeOdds("Draw") != null ? odds.getOutcomeOdds("Draw") : 0;
         }
         map.put(home, homeOdds/this.book.size());
         map.put(away, awayOdds/this.book.size());
@@ -52,14 +52,33 @@ public class OddsBook implements Serializable {
 
     public static class BookDeserializer implements JsonDeserializer<OddsBook> {
         @Override
-        public OddsBook deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        public OddsBook deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonArray bookmakers = jsonElement.getAsJsonArray();
-            Gson gson = new Gson();
             OddsBook book = new OddsBook();
-            for(JsonElement element : bookmakers){
-                JsonObject oddsObj = element.getAsJsonObject();
-                book.addOdds(oddsObj.get("title").toString(), gson.fromJson(oddsObj.getAsJsonObject("markets"), Odds.class));
+
+            for (JsonElement elem : bookmakers) {
+                JsonObject bookmakerObj = elem.getAsJsonObject();
+                String bookmakerName = bookmakerObj.get("title").getAsString();
+
+                Odds odds = new Odds(); // create a new Odds object for this bookmaker
+
+                JsonArray markets = bookmakerObj.getAsJsonArray("markets");
+                for (JsonElement marketElem : markets) {
+                    JsonObject market = marketElem.getAsJsonObject();
+                    if (!"h2h".equals(market.get("key").getAsString())) continue;
+
+                    JsonArray outcomes = market.getAsJsonArray("outcomes");
+                    for (JsonElement outcomeElem : outcomes) {
+                        JsonObject outcome = outcomeElem.getAsJsonObject();
+                        String team = outcome.get("name").getAsString();
+                        Double price = outcome.get("price").getAsDouble();
+                        odds.addOutcome(team, price);
+                    }
+                }
+
+                book.addOdds(bookmakerName, odds);
             }
+
             return book;
         }
     }

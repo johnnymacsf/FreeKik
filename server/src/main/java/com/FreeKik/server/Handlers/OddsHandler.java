@@ -22,7 +22,9 @@ public class OddsHandler {
                         JsonArray outcomes = marketObj.getAsJsonArray("outcomes");
                         for (JsonElement outcome : outcomes) {
                             JsonObject outcomeObj = outcome.getAsJsonObject();
-                            odds.addOutcome(outcomeObj.get("name").toString(), outcomeObj.get("price").toString());
+                            String name = outcomeObj.get("name").getAsString();
+                            Double price = outcomeObj.get("price").getAsDouble();
+                            odds.addOutcome(name, price);
                         }
                     }
                     oddsBook.addOdds(obj.get("title").toString(), odds);
