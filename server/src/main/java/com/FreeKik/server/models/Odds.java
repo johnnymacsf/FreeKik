@@ -51,7 +51,7 @@ public class Odds implements Serializable {
 
     @JsonAnySetter
     public void addOutcome(String name, String price){
-        this.outcomes.put(name, Double.parseDouble(price));
+        this.outcomes.put(name.replaceAll("[^a-zA-Z(\\s)]", ""), Double.parseDouble(price));
     }
 
     public void setOutcomes(HashMap<String, Double> outcomes){

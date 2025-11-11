@@ -36,8 +36,8 @@ public class Match implements Serializable {
 
     public Match(String matchId, String homeTeam, String awayTeam, String matchDate) {
         this.matchId = matchId;
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
+        this.homeTeam = homeTeam.replaceAll("[^a-zA-Z(\\s)]", "");
+        this.awayTeam = awayTeam.replaceAll("[^a-zA-Z(\\s)]", "");
         this.matchDate = matchDate;
         this.book = new OddsBook();
     }
