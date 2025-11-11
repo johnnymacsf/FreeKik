@@ -25,14 +25,18 @@ public class OddsBook implements Serializable {
             awayOdds += odds.getOutcomeOdds(away);
             drawOdds += odds.getOutcomeOdds("Draw");
         }
-        map.put("HOME", homeOdds/this.book.size());
-        map.put("AWAY", awayOdds/this.book.size());
-        map.put("DRAW", drawOdds/this.book.size());
+        map.put(home, homeOdds/this.book.size());
+        map.put(away, awayOdds/this.book.size());
+        map.put("Draw", drawOdds/this.book.size());
         return map;
     }
 
     public void addOdds(String bookmaker, Odds odds){
         this.book.put(bookmaker, odds);
+    }
+
+    public HashMap<String, Double> getBookmakerOdds(String bookmaker){
+        return book.get(bookmaker).getOutcomes();
     }
 
     @Override

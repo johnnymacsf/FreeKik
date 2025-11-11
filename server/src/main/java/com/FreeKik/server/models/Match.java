@@ -80,12 +80,17 @@ public class Match implements Serializable {
 
     public void setOddsToAvg() {
         HashMap<String, Double> avgOdds = getAvgOdds();
-        home_win_odds = avgOdds.get("HOME");
-        draw_odds = avgOdds.get("DRAW");
-        away_win_odds = avgOdds.get("AWAY");
+        home_win_odds = avgOdds.get(homeTeam);
+        draw_odds = avgOdds.get("Draw");
+        away_win_odds = avgOdds.get(awayTeam);
     }
 
-    //public void setOddsToBookmaker()
+    public void setOddsToBookmaker(String bookmaker){
+        HashMap<String, Double> bookmakerOdds = book.getBookmakerOdds(bookmaker);
+        home_win_odds = bookmakerOdds.get(homeTeam);
+        draw_odds = bookmakerOdds.get("Draw");
+        away_win_odds = bookmakerOdds.get(awayTeam);
+    }
 
     @Override
     public String toString() {

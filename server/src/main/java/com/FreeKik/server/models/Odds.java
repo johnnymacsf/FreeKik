@@ -29,7 +29,7 @@ public class Odds implements Serializable {
 
 
     public Double getOutcomeOdds(String outcome){
-        return outcomes.getOrDefault(outcome, 0.0);
+        return outcomes.get(outcome);
     }
 
     public void setBetType(String betType) {this.betType = betType;}

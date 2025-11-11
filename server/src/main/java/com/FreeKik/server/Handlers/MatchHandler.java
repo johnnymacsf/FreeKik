@@ -44,13 +44,13 @@ public class MatchHandler {
 
         if(object.get("completed").getAsBoolean()){
             if(homeScore == awayScore){
-                match.setFinalResult("DRAW");
+                match.setFinalResult("Draw");
             }
             else if(homeScore > awayScore){
-                match.setFinalResult("HOME");
+                match.setFinalResult(match.getHomeTeam());
             }
             else {
-                match.setFinalResult("AWAY");
+                match.setFinalResult(match.getAwayTeam());
             }
         }
 

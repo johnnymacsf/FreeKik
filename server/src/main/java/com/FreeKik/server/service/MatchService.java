@@ -1,5 +1,6 @@
 package com.FreeKik.server.service;
 
+import com.FreeKik.server.Handlers.MatchHandler;
 import com.FreeKik.server.models.Match;
 import com.FreeKik.server.repo.MatchRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class MatchService {
 
     public Match addMatch(Match match){
         match.setOddsToAvg();
+        //match.setOddsToBookmaker("FanDuel");
         return matchRepo.save(match);
     }
 
@@ -27,7 +29,7 @@ public class MatchService {
     }
 
     public Match updateMatch(Match match){
-        return matchRepo.save(match);
+        return matchRepo.save(new MatchHandler().updateScore(match));
     }
 
     public void deleteMatch(String id){ matchRepo.deleteMatchByMatchId(id); }
