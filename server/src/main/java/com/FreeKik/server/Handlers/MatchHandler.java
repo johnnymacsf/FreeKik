@@ -29,7 +29,11 @@ public class MatchHandler {
 
     public Match updateScore(Match match){
         JsonObject object = OddsData.getMatchScore(match.getMatchId());
-        JsonArray scores = object.get("scores").getAsJsonArray();
+        JsonElement scoresElement = object.get("scores");
+        if (scoresElement == null || !scoresElement.isJsonArray()) {
+            throw new IllegalStateException("Match scores not available for matchId: " + match.getMatchId());
+        }
+        JsonArray scores = scoresElement.getAsJsonArray();
         HashMap<String, Integer> map = new HashMap<>();
 
         for(JsonElement e : scores){

@@ -34,6 +34,8 @@ public class SecurityConfig {
                         .requestMatchers("/prediction/find/user/**").permitAll()
                         .requestMatchers("/prediction/add").authenticated()
                         .requestMatchers("/user/stats").authenticated()
+                        .requestMatchers("/club/populate").permitAll()
+                        .requestMatchers("/match/finalize/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(basic -> basic.disable())

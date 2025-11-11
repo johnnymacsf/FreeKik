@@ -102,6 +102,9 @@ public class Prediction implements Comparable<Prediction>{
     public Boolean getCorrectPrediction() {
         return correctPrediction;
     }
+    public void setCorrectPrediction(boolean correctPrediction){
+        this.correctPrediction = correctPrediction;
+    }
 
     public Long getPointsResult() {
         return pointsResult;
