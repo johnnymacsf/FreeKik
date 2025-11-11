@@ -1,5 +1,6 @@
 package com.FreeKik.server.models;
 
+import com.FreeKik.server.OddsBookConverter;
 import com.google.gson.annotations.SerializedName;
 import jakarta.persistence.*;
 import com.google.gson.*;
@@ -25,9 +26,17 @@ public class Match implements Serializable {
     @SerializedName("commence_time")
     private String matchDate;
 
+    @Convert(converter = OddsBookConverter.class)
+    @Column(columnDefinition = "TEXT")
     private OddsBook book;
+
+    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double home_win_odds;
+
+    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double draw_odds;
+
+    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double away_win_odds;
 
     public Match(){

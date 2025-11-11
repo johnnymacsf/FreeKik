@@ -50,8 +50,10 @@ public class Odds implements Serializable {
     }
 
     @JsonAnySetter
-    public void addOutcome(String name, String price){
-        this.outcomes.put(name.replaceAll("[^a-zA-Z(\\s)]", ""), Double.parseDouble(price));
+    public void addOutcome(String name, Double price){
+        if(price != null){
+            this.outcomes.put(name.replaceAll("[^a-zA-Z(\\s)]", ""), price);
+        }
     }
 
     public void setOutcomes(HashMap<String, Double> outcomes){
@@ -82,7 +84,8 @@ public class Odds implements Serializable {
                         JsonArray outcomes = marketObj.getAsJsonObject("outcomes").getAsJsonArray();
                         for (JsonElement element : outcomes) {
                             JsonObject outcomeObj = element.getAsJsonObject();
-                            odds.addOutcome(outcomeObj.get("name").toString(), outcomeObj.get("price").toString());
+                            Double price = outcomeObj.get("price").getAsDouble();
+                            odds.addOutcome(outcomeObj.get("name").toString(), price);
                         }
                     }
                 }
