@@ -1,4 +1,4 @@
-package com.FreeKik.server.Controllers;
+package com.FreeKik.server;
 
 import com.FreeKik.server.Handlers.ClubHandler;
 import com.FreeKik.server.models.Club;

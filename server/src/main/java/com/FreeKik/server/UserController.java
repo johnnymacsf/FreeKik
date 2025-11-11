@@ -1,6 +1,5 @@
-package com.FreeKik.server.Controllers;
+package com.FreeKik.server;
 
-import com.FreeKik.server.Handlers.UserStatsDto;
 import com.FreeKik.server.models.User;
 import com.FreeKik.server.service.UserService;
 import org.springframework.http.HttpStatus;

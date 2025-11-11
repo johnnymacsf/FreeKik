@@ -1,4 +1,4 @@
-package com.FreeKik.server.Controllers;
+package com.FreeKik.server;
 
 import com.FreeKik.server.models.Prediction;
 import com.FreeKik.server.service.PredictionService;

@@ -1,4 +1,4 @@
-package com.FreeKik.server.Handlers;
+package com.FreeKik.server;
 
 public class UserStatsDto {
     private long points;
