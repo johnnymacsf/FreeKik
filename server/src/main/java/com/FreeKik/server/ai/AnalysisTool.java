@@ -23,9 +23,9 @@ public class AnalysisTool implements AgentTool {
             String clean1 = team1.toLowerCase().replaceAll("[^a-z]", "");
             String clean2 = team2.toLowerCase().replaceAll("[^a-z]", "");
             System.out.println("Cleans: " + clean1 + ", " + clean2);
-            sb.append("The statistics of " + team1 + ": ");
+            sb.append("The statistics of ").append(team1).append(": ");
             sb.append(clubMap.get(clean1).getTable());
-            sb.append("The statistics of " + team2 + ": ");
+            sb.append("The statistics of ").append(team2).append(": ");
             sb.append(clubMap.get(clean2).getTable());
             sb.append(" Compare the two statistics tables and give a brief summary. Give your confidence in your prediction as a percentage.");
         }

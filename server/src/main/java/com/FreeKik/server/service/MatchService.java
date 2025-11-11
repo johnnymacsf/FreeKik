@@ -18,6 +18,7 @@ public class MatchService {
     }
 
     public Match addMatch(Match match){
+        match.setOddsToAvg();
         return matchRepo.save(match);
     }
 

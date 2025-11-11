@@ -26,6 +26,9 @@ public class Match implements Serializable {
     private String matchDate;
 
     private OddsBook book;
+    private Double home_win_odds;
+    private Double draw_odds;
+    private Double away_win_odds;
 
     public Match(){
         this.book = new OddsBook();
@@ -74,6 +77,15 @@ public class Match implements Serializable {
     public HashMap<String, Double> getAvgOdds(){
         return this.book.getAvg(this.homeTeam, this.awayTeam);
     }
+
+    public void setOddsToAvg() {
+        HashMap<String, Double> avgOdds = getAvgOdds();
+        home_win_odds = avgOdds.get("HOME");
+        draw_odds = avgOdds.get("DRAW");
+        away_win_odds = avgOdds.get("AWAY");
+    }
+
+    //public void setOddsToBookmaker()
 
     @Override
     public String toString() {

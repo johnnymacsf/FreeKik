@@ -1,10 +1,16 @@
 package com.FreeKik.server.models;
 
 import com.FreeKik.server.WebScraping.Scraper;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
+@Entity
 public class Club {
-    private String url;
+    @Id
+    @Column(unique = true, nullable = false)
     private String name;
+    private String url;
     private String image;
     private StatTable table;
 
@@ -29,6 +35,7 @@ public class Club {
     }
 
     public StatTable getTable() { return this.table; }
+    public String getTableAsString() { return this.table.toString(); }
     public void setTable(StatTable table){
         this.table = table;
     }

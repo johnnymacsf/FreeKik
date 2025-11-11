@@ -25,9 +25,9 @@ public class OddsBook implements Serializable {
             awayOdds += odds.getOutcomeOdds(away);
             drawOdds += odds.getOutcomeOdds("Draw");
         }
-        map.put(home, homeOdds/this.book.size());
-        map.put(away, awayOdds/this.book.size());
-        map.put("Draw", drawOdds/this.book.size());
+        map.put("HOME", homeOdds/this.book.size());
+        map.put("AWAY", awayOdds/this.book.size());
+        map.put("DRAW", drawOdds/this.book.size());
         return map;
     }
 
