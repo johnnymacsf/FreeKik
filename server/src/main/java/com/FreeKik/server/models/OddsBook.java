@@ -35,6 +35,10 @@ public class OddsBook implements Serializable {
         this.book.put(bookmaker, odds);
     }
 
+    public HashMap<String, Double> getBookmakerOdds(String bookmaker){
+        return book.get(bookmaker).getOutcomes();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

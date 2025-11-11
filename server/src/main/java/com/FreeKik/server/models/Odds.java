@@ -29,7 +29,7 @@ public class Odds implements Serializable {
 
 
     public Double getOutcomeOdds(String outcome){
-        return outcomes.getOrDefault(outcome, 0.0);
+        return outcomes.get(outcome);
     }
 
     public void setBetType(String betType) {this.betType = betType;}
@@ -51,7 +51,7 @@ public class Odds implements Serializable {
 
     @JsonAnySetter
     public void addOutcome(String name, String price){
-        this.outcomes.put(name, Double.parseDouble(price));
+        this.outcomes.put(name.replaceAll("[^a-zA-Z(\\s)]", ""), Double.parseDouble(price));
     }
 
     public void setOutcomes(HashMap<String, Double> outcomes){
