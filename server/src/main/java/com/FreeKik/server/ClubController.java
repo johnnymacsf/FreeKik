@@ -15,10 +15,11 @@ import java.util.List;
 @RequestMapping("/club")
 public class ClubController {
     private final ClubService clubService;
-    private final ClubHandler clubHandler = new ClubHandler();
+    private final ClubHandler clubHandler;
 
-    public ClubController(ClubService clubService) {
+    public ClubController(ClubService clubService, ClubHandler clubHandler) {
         this.clubService = clubService;
+        this.clubHandler = clubHandler;
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -43,8 +44,8 @@ public class ClubController {
     @PostMapping("/populate")
     public List<ResponseEntity<Club>> addAllClubs() {
         ArrayList<ResponseEntity<Club>> list = new ArrayList<>();
-        HashMap<String, Club> clubs = ClubHandler.getAllClubs();
-        ClubHandler.setAllStatTables(clubs);
+        HashMap<String, Club> clubs = clubHandler.getAllClubs();
+        clubHandler.setAllStatTables(clubs);
         clubs.forEach((name, club) -> list.add(addClub(club)));
         return list;
     }
@@ -52,7 +53,7 @@ public class ClubController {
     @GetMapping("/stats/{name}")
     public ResponseEntity<Club> getMatchOdds(@PathVariable("name") String name){
         Club club = clubService.findClubByName(name);
-        ClubHandler.setStatTable(club);
+        clubHandler.setStatTable(club);
         return addClub(club);
     }
 }

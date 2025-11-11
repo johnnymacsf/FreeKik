@@ -2,6 +2,7 @@ package com.FreeKik.server.API;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.net.URI;
@@ -92,7 +93,25 @@ public class OddsData {
             e.printStackTrace();
         }
         Gson gson = new Gson();
-        JsonArray jsonArray = gson.fromJson(response.body(), JsonArray.class).get(0).getAsJsonObject().get("bookmakers").getAsJsonArray();
-        return jsonArray;
+        JsonElement element = gson.fromJson(response.body(), JsonElement.class);
+        if (element.isJsonArray()) {
+            JsonArray arr = element.getAsJsonArray();
+            if (arr.size() > 0) {
+                JsonObject firstEvent = arr.get(0).getAsJsonObject();
+                if (firstEvent.has("bookmakers")) {
+                    return firstEvent.get("bookmakers").getAsJsonArray();
+                }
+            }
+            return new JsonArray(); // empty if no bookmakers
+        } else if (element.isJsonObject()) {
+            JsonObject obj = element.getAsJsonObject();
+            // Optional: log API error message
+            if (obj.has("msg")) {
+                System.out.println("API returned message: " + obj.get("msg").getAsString());
+            }
+            return new JsonArray(); // return empty if API returned an object
+        } else {
+            return new JsonArray(); // fallback
+        }
     }
 }

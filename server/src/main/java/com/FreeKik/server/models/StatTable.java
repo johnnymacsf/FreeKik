@@ -1,10 +1,20 @@
 package com.FreeKik.server.models;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.MapKeyColumn;
+
 import java.util.HashMap;
 
+@Embeddable
 public class StatTable {
     //private String name;
     private String gamesPlayed;
+
+    @ElementCollection
+    @CollectionTable(name="club_stats")
+    @MapKeyColumn(name="label")
     private HashMap<String, HashMap<String, String>> table;
 
     public StatTable(){

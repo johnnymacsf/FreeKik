@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ClubRepo extends JpaRepository<Club, String> {
-    void deleteClubByClubName(String clubName);
+    void deleteClubByName(String name);
 
-    Optional<Club> findClubByClubName(String clubName);
+    Optional<Club> findClubByName(String name);
 }
