@@ -29,6 +29,9 @@ export default function MatchPage() {
     const {matchId} = params;
     const [match, setMatch] = useState<Match |null>(null);
     const [formOpen, setFormOpen] = useState(false);
+    const [aiBoxOpen, setAiBoxOpen] = useState(false);
+    const [aiText, setAiText] = useState("");
+
     const [resultPrediction, setResultPrediction] = useState("");
     const [pointsBet, setPointsBet] = useState("");
 
@@ -37,6 +40,15 @@ export default function MatchPage() {
 
     const username = localStorage.getItem("username");
     const token = localStorage.getItem("token");
+
+    const handleAiBoxOpen = () => {
+        setAiText("placeholder text");
+        setAiBoxOpen(true);
+    }
+
+    const handleAiBoxClose = () => {
+        setAiBoxOpen(false);
+    }
 
     useEffect(() => {
         async function fetchMatch() {
@@ -85,6 +97,16 @@ export default function MatchPage() {
                 <p className="text-md text-black">{match?.finalResult ? match.finalResult : "Not Finished Yet"}</p>
                 <h2 className="text-lg font-semibold mt-4 mb-2">Odds</h2>
 
+                <button className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-300 mt-4" onClick={handleAiBoxOpen}>Show AI Prediction</button>
+                {aiBoxOpen && (
+                    <div className="fixed inset-0 bg-gray-100 flex justify-center items-center z-50">
+                        <div className="bg-white p-6 rounded shadow-lg w-96 relative">
+                            <button className="bg-red-600 top-2 right-2 absolute cursor-pointer hover:bg-red-300" onClick={handleAiBoxClose}>X</button>
+                            <h2 className="text-xl font-bold mb-4 text-blue-600">AI Summary</h2>
+                            <p className="text-black">{aiText}</p>
+                        </div>
+                    </div>
+                )}
                 <button className="bg-green-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-green-300 mt-4" onClick={handleFormOpen}>Add Prediction</button>
                 {formOpen && (
                     <div className="fixed inset-0 bg-gray-100 flex justify-center items-center z-50">
