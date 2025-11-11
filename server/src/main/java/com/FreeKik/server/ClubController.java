@@ -47,6 +47,7 @@ public class ClubController {
         HashMap<String, Club> clubs = clubHandler.getAllClubs();
         clubHandler.setAllStatTables(clubs);
         clubs.forEach((name, club) -> list.add(addClub(club)));
+        System.out.println(clubs);
         return list;
     }
 

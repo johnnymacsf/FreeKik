@@ -5,6 +5,7 @@ import com.FreeKik.server.models.Prediction;
 import com.FreeKik.server.models.User;
 import com.FreeKik.server.repo.PredictionRepo;
 import com.FreeKik.server.repo.UserRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,34 @@ public class PredictionService {
         this.predictionRepo = predRepo;
         this.userRepo = userRepo;
         this.matchService = matchService;
+    }
+
+    @Transactional
+    public List<Prediction> finalizeMatchPredictions(String matchId, String finalResult) {
+        List<Prediction> predictions = findPredictionsByMatchId(matchId);
+
+        for (Prediction prediction : predictions) {
+            User user = prediction.getUser();
+            System.out.println("Prediction: '" + prediction.getResult_prediction() + "'");
+            System.out.println("Final result: '" + finalResult + "'");
+            boolean correct = prediction.getResult_prediction().trim().equalsIgnoreCase(finalResult.trim());
+
+            if (correct) {
+                user.setPoints(user.getPoints() + prediction.getPointsBet() * 2);
+                user.setWins(user.getWins() + 1);
+            } else {
+                user.setPoints(user.getPoints() - prediction.getPointsBet());
+                user.setLosses(user.getLosses() + 1);
+            }
+
+            prediction.setCorrectPrediction(correct);
+
+
+            predictionRepo.save(prediction);
+            userRepo.save(user);
+        }
+
+        return predictions;
     }
 
     public Prediction addPrediction(Prediction prediction, String username){

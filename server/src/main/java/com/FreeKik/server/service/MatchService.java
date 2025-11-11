@@ -38,4 +38,11 @@ public class MatchService {
         return matchRepo.findMatchByMatchId(id).orElseThrow(() -> new IllegalArgumentException("Match with id " + id + " not found"));
     }
 
+    public Match finalizeMatchResult(Match match) {
+        // Just save the match as-is, skip updateScore
+        return matchRepo.save(match);
+    }
+
+
+
 }
