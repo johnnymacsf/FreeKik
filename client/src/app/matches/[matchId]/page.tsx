@@ -29,9 +29,14 @@ export default function MatchPage() {
     const {matchId} = params;
     const [match, setMatch] = useState<Match |null>(null);
     const [formOpen, setFormOpen] = useState(false);
+    const [resultPrediction, setResultPrediction] = useState("");
+    const [pointsBet, setPointsBet] = useState(0);
 
     const handleFormOpen = () => setFormOpen(true);
     const handleFormClose = () => setFormOpen(false);
+
+    const username = localStorage.getItem("username");
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         async function fetchMatch() {
@@ -44,6 +49,31 @@ export default function MatchPage() {
         }
         fetchMatch();
     }, [matchId]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log("Submit clicked!");
+        if(!resultPrediction || pointsBet <= 0){
+            return;
+        }
+        try{
+            console.log(match?.matchId + ", " + pointsBet + ", " + username + ", " + resultPrediction);
+            const response = await API.post("/prediction/add", {
+                matchId: match?.matchId,
+                username: username,
+                pointsBet: pointsBet,
+                resultPrediction: resultPrediction
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log("response: " + response.data);
+            handleFormClose();
+        }catch(error: any){
+            console.log(error)
+        }
+    }
 
     return (
         <div className="bg-white text-black w-full min-h-screen p-4">
@@ -60,15 +90,15 @@ export default function MatchPage() {
                         <div className="bg-white p-6 rounded shadow-lg w-96 relative">
                             <button onClick={handleFormClose} className="bg-red-500 top-2 right-2 absolute cursor-pointer hover:bg-red-300">X</button>
                             <h2 className="text-xl font-bold mb-4 text-blue-600">Add Prediction</h2>
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <label className="block mb-2 font-semibold text-black">Result</label>
-                                <select className="border p-2 w-full mb-4 rounded">
+                                <select className="border p-2 w-full mb-4 rounded" value={resultPrediction} onChange={(e) => setResultPrediction(e.target.value)}>
                                     <option value={`${match?.homeTeam}-win`}>{match?.homeTeam}</option>
                                     <option value="draw">Draw</option>
                                     <option value={`${match?.awayTeam}-win`}>{match?.awayTeam}</option>
                                 </select>
                                 <label className="block mb-2 font-semibold text-black">Points Bet</label>
-                                <input type="number" placeholder="Points" className="border p-2 w-full mb-4 rounded"/>
+                                <input type="number" placeholder="Points" className="border p-2 w-full mb-4 rounded" value={pointsBet} onChange={(e) => setPointsBet(Number(e.target.value))}/>
                                 <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-300">Submit</button>
                             </form>
                         </div>

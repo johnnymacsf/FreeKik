@@ -1,5 +1,6 @@
 package com.FreeKik.server.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -12,16 +13,21 @@ public class Prediction implements Comparable<Prediction>{
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
     private String matchId;
+
+    @Column(name="date_made")
     private String dateMade;
+    @Column(name="home_team")
     private String homeTeam;
+    @Column(name="away_team")
     private String awayTeam;
     private String finalResult;
     private String resultPrediction;
-    private Long predictionOdds;
-    private Long pointsBet;
+    private Long predictionOdds = 0L;
+    private Long pointsBet = 0L;
     private Long pointsResult = 0L;
     private Boolean correctPrediction = false;
 
@@ -61,6 +67,12 @@ public class Prediction implements Comparable<Prediction>{
     }
     public void setHomeTeam(String homeTeam){
         this.homeTeam = homeTeam;
+    }
+    public String getHomeTeam(){
+        return homeTeam;
+    }
+    public String getAwayTeam(){
+        return awayTeam;
     }
 
     public String getResult_prediction() {
